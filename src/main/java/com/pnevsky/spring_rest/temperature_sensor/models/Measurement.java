@@ -1,56 +1,75 @@
 package com.pnevsky.spring_rest.temperature_sensor.models;
 
-import jakarta.annotation.Generated;
-import jakarta.persistence.Column;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Size;
-import org.springframework.beans.factory.annotation.Value;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
+import java.time.LocalDateTime;
+
+@Entity
 @Table(name = "Measurement")
 public class Measurement {
 
     @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "sensor")
+    @ManyToOne
+    @JoinColumn(name = "sensors", referencedColumnName = "name")
     private Sensor sensor;
 
-    @NotEmpty(message = "The field should not be empty")
-    @Size(min = -100, max = 100, message = "Incorrect temperature")
+    @NotNull(message = "The field should not be null")
+    @Min(-100)
+    @Max(100)
     @Column(name = "value")
-    private long value;
+    private Double value;
 
     @Column(name = "raining")
-    @NotEmpty(message = "The field should not be empty")
-    private boolean raining;
+    @NotNull(message = "The field should not be empty")
+    private Boolean raining;
 
+    @Column(name = "measurement_time")
+    @NotNull(message = "The field should not be empty")
+    private LocalDateTime measurementTime;
 
-    public Measurement(long value, boolean raining) {
-        this.value = value;
-        this.raining = raining;
+    public Integer getId() {
+        return id;
     }
 
-    public Measurement() {
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public long getValue() {
+    public Sensor getSensor() {
+        return sensor;
+    }
+
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(long value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
-    public boolean isRaining() {
+    public Boolean isRaining() {
         return raining;
     }
 
-    public void setRaining(boolean rain) {
-        this.raining = rain;
+    public void setRaining(Boolean raining) {
+        this.raining = raining;
+    }
+
+    public LocalDateTime getMeasurementTime() {
+        return measurementTime;
+    }
+
+    public void setMeasurementTime(LocalDateTime measurementTime) {
+        this.measurementTime = measurementTime;
     }
 }

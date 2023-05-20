@@ -1,27 +1,31 @@
 package com.pnevsky.spring_rest.temperature_sensor.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import org.hibernate.annotations.AnyDiscriminator;
-import org.hibernate.annotations.BatchSize;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
+import java.io.Serializable;
+
+@Entity
 @Table(name = "Sensors")
-public class Sensor {
+public class Sensor implements Serializable {
+
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @Column(name = "name")
     @NotEmpty(message = "The field should not be empty")
     @Length(min = 3, max = 30, message = "Incorrect name length")
     private String name;
 
-    public Sensor(String name) {
-        this.name = name;
+    public int getId() {
+        return id;
     }
 
-    public Sensor() {
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
