@@ -1,33 +1,53 @@
 package com.pnevsky.spring_rest.temperature_sensor.controllers;
 
-import org.springframework.stereotype.Controller;
+import com.pnevsky.spring_rest.temperature_sensor.DTO.SensorDTO;
+import com.pnevsky.spring_rest.temperature_sensor.models.Sensor;
+import com.pnevsky.spring_rest.temperature_sensor.utils.SensorValidator;
+import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequestMapping("/sensors")
 public class SensorsController {
 
-    @PostMapping ("/sensors/registration")
-    @ResponseBody()
-    public String sensorRegistration() {
+    private final ModelMapper modelMapper;
+    private final SensorValidator sensorValidator;
 
-        return "sensors/registration";
+    @Autowired
+    public SensorsController(ModelMapper modelMapper, SensorValidator sensorValidator) {
+        this.modelMapper = modelMapper;
+        this.sensorValidator = sensorValidator;
     }
 
-    @PostMapping("/measurements/add")
-    @ResponseBody
-    public String addMeasurement(){
-        return "measurements/add";
+
+    @PostMapping ("/registration")
+    public ResponseEntity<HttpStatus> sensorRegistration(
+            @RequestBody @Valid SensorDTO sensorDTO, BindingResult bindingResult) {
+        Sensor newSensor = converToSensor(sensorDTO);
+        sensorValidator.validate(newSensor, bindingResult);
+
+
+
+
+        return ;
     }
 
-    @GetMapping("/measurements")
-    public String getMeasurements(){
-        return "index";
+    private Sensor converToSensor(SensorDTO sensorDTO) {
+        modelMapper.map(sensorDTO, Sensor.class);
     }
 
-    @GetMapping("measurements/rainyDays")
-    public String getRainyDays(){
-        return "index";
-    }
+
+
+
+
+
+
+
 
 
 }
