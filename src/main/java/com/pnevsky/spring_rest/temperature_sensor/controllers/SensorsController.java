@@ -2,6 +2,7 @@ package com.pnevsky.spring_rest.temperature_sensor.controllers;
 
 import com.pnevsky.spring_rest.temperature_sensor.DTO.SensorDTO;
 import com.pnevsky.spring_rest.temperature_sensor.models.Sensor;
+import com.pnevsky.spring_rest.temperature_sensor.services.SensorService;
 import com.pnevsky.spring_rest.temperature_sensor.utils.SensorValidator;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -17,11 +18,13 @@ public class SensorsController {
 
     private final ModelMapper modelMapper;
     private final SensorValidator sensorValidator;
+    private final SensorService sensorService;
 
     @Autowired
-    public SensorsController(ModelMapper modelMapper, SensorValidator sensorValidator) {
+    public SensorsController(ModelMapper modelMapper, SensorValidator sensorValidator, SensorService sensorService) {
         this.modelMapper = modelMapper;
         this.sensorValidator = sensorValidator;
+        this.sensorService = sensorService;
     }
 
 
@@ -31,23 +34,14 @@ public class SensorsController {
         Sensor newSensor = converToSensor(sensorDTO);
         sensorValidator.validate(newSensor, bindingResult);
 
+        if(bindingResult.hasErrors())
+            throw new RuntimeException();
 
-
-
-        return ;
+        sensorService.register(newSensor);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
     private Sensor converToSensor(SensorDTO sensorDTO) {
-        modelMapper.map(sensorDTO, Sensor.class);
+        return modelMapper.map(sensorDTO, Sensor.class);
     }
-
-
-
-
-
-
-
-
-
-
 }

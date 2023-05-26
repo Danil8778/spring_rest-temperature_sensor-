@@ -1,45 +1,26 @@
-package com.pnevsky.spring_rest.temperature_sensor.models;
+package com.pnevsky.spring_rest.temperature_sensor.DTO;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import com.pnevsky.spring_rest.temperature_sensor.models.Sensor;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "Measurement")
-public class Measurement {
+public class MeasurementDTO {
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
-
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "sensors", referencedColumnName = "name")
     private Sensor sensor;
 
     @NotNull(message = "The field should not be null")
     @Min(-100)
     @Max(100)
-    @Column(name = "value")
     private Double value;
 
-    @Column(name = "raining")
     @NotNull(message = "The field should not be empty")
     private Boolean raining;
 
-    @Column(name = "measurement_time")
     @NotNull(message = "The field should not be empty")
     private LocalDateTime measurementTime;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Sensor getSensor() {
         return sensor;
@@ -57,7 +38,7 @@ public class Measurement {
         this.value = value;
     }
 
-    public Boolean isRaining() {
+    public Boolean getRaining() {
         return raining;
     }
 
