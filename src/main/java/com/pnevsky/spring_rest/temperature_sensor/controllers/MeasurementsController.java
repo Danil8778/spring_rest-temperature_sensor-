@@ -38,8 +38,8 @@ public class MeasurementsController {
 
         if(bindingResult.hasErrors())
             throw new RuntimeException();
-
         measurementService.addMeasurement(newMeasurement);
+
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -62,5 +62,7 @@ public class MeasurementsController {
     private MeasurementDTO convertToMeasurementDTO(Measurement measurement){
         return modelMapper.map(measurement, MeasurementDTO.class);
     }
-
 }
+
+
+

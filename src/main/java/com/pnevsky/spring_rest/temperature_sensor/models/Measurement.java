@@ -6,7 +6,7 @@ import jakarta.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Measurement")
+@Table(name = "Measurements")
 public class Measurement {
 
     @Id
@@ -16,21 +16,21 @@ public class Measurement {
 
     @NotNull
     @ManyToOne
-    @JoinColumn(name = "sensors", referencedColumnName = "name")
+    @JoinColumn(name = "sensor", referencedColumnName = "name")
     private Sensor sensor;
 
-    @NotNull(message = "The field should not be null")
+    @NotNull
     @Min(-100)
     @Max(100)
     @Column(name = "value")
     private Double value;
 
     @Column(name = "raining")
-    @NotNull(message = "The field should not be empty")
+    @NotNull
     private Boolean raining;
 
+    @NotNull
     @Column(name = "measurement_time")
-    @NotNull(message = "The field should not be empty")
     private LocalDateTime measurementTime;
 
     public Integer getId() {

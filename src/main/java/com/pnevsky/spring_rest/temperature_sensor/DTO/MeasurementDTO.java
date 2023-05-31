@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 
 public class MeasurementDTO {
 
+    @NotNull
     private Sensor sensor;
 
     @NotNull(message = "The field should not be null")
@@ -19,8 +20,7 @@ public class MeasurementDTO {
     @NotNull(message = "The field should not be empty")
     private Boolean raining;
 
-    @NotNull(message = "The field should not be empty")
-    private LocalDateTime measurementTime;
+
 
     public Sensor getSensor() {
         return sensor;
@@ -46,11 +46,4 @@ public class MeasurementDTO {
         this.raining = raining;
     }
 
-    public LocalDateTime getMeasurementTime() {
-        return measurementTime;
-    }
-
-    public void setMeasurementTime(LocalDateTime measurementTime) {
-        this.measurementTime = measurementTime;
-    }
 }
