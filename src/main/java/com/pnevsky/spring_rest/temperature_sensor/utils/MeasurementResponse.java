@@ -6,17 +6,17 @@ import java.util.List;
 
 public class MeasurementResponse {
 
-    private List<MeasurementDTO> measurementDTOList;
+    private List<MeasurementDTO> measurements;
 
-    public MeasurementResponse(List<MeasurementDTO> measurementDTOList) {
-        this.measurementDTOList = measurementDTOList;
+    public MeasurementResponse(List<MeasurementDTO> measurements) {
+        this.measurements = measurements;
     }
 
-    public List<MeasurementDTO> getMeasurementDTOList() {
-        return measurementDTOList;
+    public List<MeasurementDTO> getMeasurements() {
+        return measurements;
     }
 
-    public void setMeasurementDTOList(List<MeasurementDTO> measurementDTOList) {
-        this.measurementDTOList = measurementDTOList;
+    public void setMeasurements(List<MeasurementDTO> measurements) {
+        this.measurements = measurements;
     }
 }
